@@ -38,6 +38,12 @@
             box-sizing: border-box;
         }
 
+        .input-hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
         button {
             background-color: #4CAF50;
             color: white;
@@ -103,22 +109,24 @@
 
             <div class="form-group">
                 <label for="views">Views:</label>
-                <input type="number" id="views" required>
+                <input type="number" id="views" min="0" placeholder="Enter number of views" required>
             </div>
 
             <div class="form-group">
                 <label for="time">Time (in minutes):</label>
-                <input type="number" id="time" step="0.1" required>
+                <input type="number" id="time" step="0.01" min="0" placeholder="e.g., 1.5 for 1 min 30 sec" required>
+                <div class="input-hint">Enter decimal values (e.g., 1.5 for 1 minute 30 seconds)</div>
             </div>
 
             <div class="form-group">
                 <label for="earning">Earning (in dollars):</label>
-                <input type="number" id="earning" required>
+                <input type="number" id="earning" step="0.01" min="0" placeholder="e.g., 25.50" required>
+                <div class="input-hint">Enter decimal values (e.g., 25.50 for $25.50)</div>
             </div>
 
             <div class="form-group">
                 <label for="engagement">Engagement (likes + comments):</label>
-                <input type="number" id="engagement" required>
+                <input type="number" id="engagement" min="0" placeholder="Total number of likes and comments" required>
             </div>
 
             <button type="submit">Calculate Metrics</button>
@@ -132,6 +140,7 @@
                 <div class="progress-bar">
                     <div class="progress" id="viewsProgress"></div>
                 </div>
+                <div class="input-hint"><span id="viewsValue"></span></div>
             </div>
 
             <div class="metric">
@@ -139,6 +148,7 @@
                 <div class="progress-bar">
                     <div class="progress" id="timeProgress"></div>
                 </div>
+                <div class="input-hint"><span id="timeValue"></span></div>
             </div>
 
             <div class="metric">
@@ -146,6 +156,7 @@
                 <div class="progress-bar">
                     <div class="progress" id="earningProgress"></div>
                 </div>
+                <div class="input-hint"><span id="earningValue"></span></div>
             </div>
 
             <div class="metric">
@@ -153,6 +164,7 @@
                 <div class="progress-bar">
                     <div class="progress" id="engagementProgress"></div>
                 </div>
+                <div class="input-hint"><span id="engagementValue"></span></div>
             </div>
 
             <div class="overall-score">
@@ -189,6 +201,12 @@
             updateProgressBar('earningProgress', earningScore);
             updateProgressBar('engagementProgress', engagementScore);
             document.getElementById('overallScore').textContent = overallScore;
+
+            // Update value displays
+            document.getElementById('viewsValue').textContent = `Views: ${views.toLocaleString()}`;
+            document.getElementById('timeValue').textContent = `Time: ${time.toFixed(2)} minutes`;
+            document.getElementById('earningValue').textContent = `Earning: $${earning.toFixed(2)}`;
+            document.getElementById('engagementValue').textContent = `Engagement: ${engagement.toLocaleString()}`;
 
             // Show results
             document.getElementById('results').style.display = 'block';
